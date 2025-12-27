@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Comfy C Hostel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f6f8;
+        }
+
+        header {
+            background-color: #001f3f;
+            color: #ffeb3b;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin-top: 8px;
+            font-size: 16px;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 20px;
+            border-left: 6px solid #001f3f;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .welcome h2 {
+            color: #001f3f;
+            margin-top: 0;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #001f3f;
+            color: #ffeb3b;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #ffffff;
+        }
+
+        footer {
+            background: #001f3f;
+            color: #ffeb3b;
+            text-align: center;
+            padding: 12px;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<header style="position:relative;">
+    <h1>Comfy C Hostel Management System</h1>
+    <p>Comfort • Care • Convenience</p>
+
+    <button onclick="location.href='/logout'"
+            style="
+    position:absolute;
+    top:20px;
+    right:20px;
+    background:#ffeb3b;
+    color:#001f3f;
+    border:none;
+    padding:8px 15px;
+    cursor:pointer;
+    font-weight:bold;
+    ">
+        Logout
+    </button>
+</header>
+
+
+<div class="container">
+
+    <div class="welcome">
+        <h2>Welcome, Admin </h2>
+        <p>
+            This dashboard allows you to efficiently manage hostel operations including
+            <b>tenants, rooms, payments, and complaints</b>.
+            All information is securely stored and managed using MongoDB.
+        </p>
+    </div>
+
+    <div class="cards">
+        <div class="card" onclick="location.href='tenant.html'">
+            <h3>Tenants</h3>
+            <p>View and manage tenant details</p>
+        </div>
+
+        <div class="card" onclick="location.href='room.html'">
+            <h3>Rooms</h3>
+            <p>Check room availability and details</p>
+        </div>
+
+        <div class="card" onclick="location.href='payment.html'">
+            <h3>Payments</h3>
+            <p>Track monthly rent payments</p>
+        </div>
+
+        <div class="card" onclick="location.href='complaint.html'">
+            <h3>Complaints</h3>
+            <p>View and resolve tenant issues</p>
+        </div>
+        <div class="card" onclick="location.href='feedback.html'">
+            <h3>Feedback</h3>
+            <p>Share your experience</p>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2025 ComfyStay Hostel | Contact: +91-9876543210 | info@comfyc.com
+</footer>
+
+</body>
+</html>

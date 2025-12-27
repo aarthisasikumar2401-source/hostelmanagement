@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tenants</title>
+    <style>
+        body { font-family: Arial; background:#001f3f; padding:20px; }
+        h2 { color:#ffeb3b; }
+        table { width:100%; background:white; border-collapse:collapse; }
+        th, td { padding:12px; border:1px solid #ddd; }
+        th { background:#001f3f; color:#ffeb3b; }
+    </style>
+</head>
+<body>
+
+<h2>Tenant Details</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Room No</th>
+        <th>Joining Date</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody id="tenantTable"></tbody>
+</table>
+
+<script>
+    fetch("/api/tenants")
+    .then(res => res.json())
+    .then(data => {
+        const table = document.getElementById("tenantTable");
+        if(data.length === 0){
+            table.innerHTML = "<tr><td colspan='5'>No Tenants Found</td></tr>";
+            return;
+        }
+        data.forEach(t => {
+            table.innerHTML += `
+            <tr>
+                <td>${t.name}</td>
+                <td>${t.email}</td>
+                <td>${t.roomNumber}</td>
+                <td>${t.joiningDate}</td>
+                <td>${t.status}</td>
+            </tr>`;
+        });
+    });
+</script>
+
+</body>
+</html>

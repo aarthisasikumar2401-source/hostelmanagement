@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payments</title>
+    <style>
+        body { font-family: Arial; background:#001f3f; padding:20px; }
+        h2 { color:#ffeb3b; }
+        table { width:100%; background:white; border-collapse:collapse; }
+        th, td { padding:12px; border:1px solid #ddd; }
+        th { background:#001f3f; color:#ffeb3b; }
+    </style>
+</head>
+<body>
+
+<h2>Payment Details</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Tenant Email</th>
+        <th>Month</th>
+        <th>Amount</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody id="paymentTable"></tbody>
+</table>
+
+<script>
+    fetch("/api/payments")
+    .then(res => res.json())
+    .then(data => {
+        const table = document.getElementById("paymentTable");
+        data.forEach(p => {
+            table.innerHTML += `
+            <tr>
+                <td>${p.tenantEmail}</td>
+                <td>${p.month}</td>
+                <td>${p.amount}</td>
+                <td>${p.status}</td>
+            </tr>`;
+        });
+    });
+</script>
+
+</body>
+</html>

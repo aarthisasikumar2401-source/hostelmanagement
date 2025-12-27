@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback</title>
+    <style>
+        body {
+            font-family: Arial;
+            background:#001f3f;
+            color:#ffeb3b;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+        form {
+            background:white;
+            color:#001f3f;
+            padding:25px;
+            border-radius:8px;
+            width:350px;
+        }
+        input, textarea {
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+        }
+        button {
+            background:#001f3f;
+            color:#ffeb3b;
+            border:none;
+            padding:10px;
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+
+<form onsubmit="submitFeedback(event)">
+    <h2>Feedback</h2>
+    <input type="text" required placeholder="Your Name">
+    <input type="email" required placeholder="Your Email">
+    <textarea required placeholder="Your Feedback"></textarea>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    function submitFeedback(e){
+        e.preventDefault();
+        alert("Thank you for your feedback! 😊");
+    }
+</script>
+
+</body>
+</html>

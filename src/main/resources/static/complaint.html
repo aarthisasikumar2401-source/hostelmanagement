@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complaints</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f4f6f8; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background: navy; color: white; }
+    </style>
+</head>
+<body>
+
+<h2>Complaints</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Tenant Email</th>
+        <th>Issue</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody id="complaintTable"></tbody>
+</table>
+
+<script>
+    fetch("/api/complaints")
+        .then(response => response.json())
+        .then(data => {
+            const table = document.getElementById("complaintTable");
+
+            if (!Array.isArray(data) || data.length === 0) {
+                table.innerHTML = "<tr><td colspan='3'>No complaints found.</td></tr>";
+                return;
+            }
+
+            data.forEach(c => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${c.tenantEmail}</td>
+                    <td>${c.issue}</td>
+                    <td style="color:${c.status==='OPEN'?'red':'green'}">${c.status}</td>
+                `;
+                table.appendChild(row);
+            });
+        })
+        .catch(err => {
+            console.error("Error fetching complaints:", err);
+            const table = document.getElementById("complaintTable");
+            table.innerHTML = "<tr><td colspan='3'>Error fetching complaints.</td></tr>";
+        });
+</script>
+
+</body>
+</html>
