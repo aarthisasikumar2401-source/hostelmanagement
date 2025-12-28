@@ -10,16 +10,39 @@ public class Room {
     private String id;
 
     private String roomNumber;
-    private String type;
-    private int capacity;
-    private int occupied;
-    private int rent;
+    private String roomType;
     private String status;
 
-    public String getRoomNumber() { return roomNumber; }
-    public String getType() { return type; }
-    public int getCapacity() { return capacity; }
-    public int getOccupied() { return occupied; }
-    public int getRent() { return rent; }
-    public String getStatus() { return status; }
+    // getters & setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

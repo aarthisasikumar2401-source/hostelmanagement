@@ -1,4 +1,3 @@
-
 package com.hostel.hostelmanagement.controller;
 
 import com.hostel.hostelmanagement.model.Payment;
@@ -9,11 +8,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/payments")
-public class PaymentController {
+@CrossOrigin
+public class PaymentRestController {
 
     private final PaymentRepository paymentRepository;
 
-    public PaymentController(PaymentRepository paymentRepository) {
+    public PaymentRestController(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
     }
 
@@ -21,5 +21,11 @@ public class PaymentController {
     @GetMapping
     public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
+    }
+
+    // Add new payment
+    @PostMapping
+    public Payment addPayment(@RequestBody Payment payment) {
+        return paymentRepository.save(payment);
     }
 }

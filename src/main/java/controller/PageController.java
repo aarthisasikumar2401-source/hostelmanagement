@@ -6,28 +6,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
 
-    @GetMapping("/dashboard")
-    public String dashboardPage() {
-        return "dashboard";
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/index.html";
     }
 
-    @GetMapping("/complaint")
-    public String complaintPage() {
-        return "complaint";
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "redirect:/dashboard.html";
     }
 
     @GetMapping("/payment")
-    public String paymentPage() {
-        return "payment";
+    public String payment() {
+        return "redirect:/payment.html";
     }
 
-    @GetMapping("/room")
-    public String roomPage() {
-        return "room";
+    @GetMapping("/complaint")
+    public String complaint() {
+        return "redirect:/complaint.html";
     }
 
     @GetMapping("/tenant")
-    public String tenantPage() {
-        return "tenant";
+    public String tenant() {
+        return "redirect:/tenant.html";
+    }
+
+    @GetMapping("/room")
+    public String room() {
+        return "redirect:/room.html";
     }
 }

@@ -2,22 +2,28 @@ package com.hostel.hostelmanagement.controller;
 
 import com.hostel.hostelmanagement.model.Room;
 import com.hostel.hostelmanagement.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/rooms")
+@RequestMapping("/room")
 public class RoomController {
 
-    private final RoomRepository roomRepository;
+    @Autowired
+    private RoomRepository roomRepository;
 
-    public RoomController(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
+    // ✅ ADD ROOM
+    @PostMapping("/add")
+    public String addRoom(@ModelAttribute Room room) {
+        roomRepository.save(room);
+        return "<script>alert('Room added successfully');window.location.href='/room.html';</script>";
     }
 
-    @GetMapping
-    public List<Room> getRooms() {
+    // ✅ DISPLAY ALL ROOMS (for fetch)
+    @GetMapping("/all")
+    public List<Room> getAllRooms() {
         return roomRepository.findAll();
     }
 }

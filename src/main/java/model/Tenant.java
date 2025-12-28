@@ -10,22 +10,28 @@ public class Tenant {
     private String id;
 
     private String name;
-    private String email;
     private String roomNumber;
-    private String joiningDate;
-    private String status;
+    private String phone;
+    private String email;
+
+    public Tenant() {}
+
+    public Tenant(String name, String roomNumber, String phone, String email) {
+        this.name = name;
+        this.roomNumber = roomNumber;
+        this.phone = phone;
+        this.email = email;
+    }
 
     public String getId() { return id; }
     public String getName() { return name; }
-    public String getEmail() { return email; }
     public String getRoomNumber() { return roomNumber; }
-    public String getJoiningDate() { return joiningDate; }
-    public String getStatus() { return status; }
+    public String getPhone() { return phone; }
+    public String getEmail() { return email; }
 
     public void setId(String id) { this.id = id; }
     public void setName(String name) { this.name = name; }
-    public void setEmail(String email) { this.email = email; }
     public void setRoomNumber(String roomNumber) { this.roomNumber = roomNumber; }
-    public void setJoiningDate(String joiningDate) { this.joiningDate = joiningDate; }
-    public void setStatus(String status) { this.status = status; }
+    public void setPhone(String phone) { this.phone = phone; }
+    public void setEmail(String email) { this.email = email; }
 }

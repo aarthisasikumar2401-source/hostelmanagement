@@ -1,45 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Payments</title>
+    <meta charset="UTF-8">
+    <title>ComfyStay | Payments</title>
+
+    <!-- ===== INLINE CSS ===== -->
     <style>
-        body { font-family: Arial; background:#001f3f; padding:20px; }
-        h2 { color:#ffeb3b; }
-        table { width:100%; background:white; border-collapse:collapse; }
-        th, td { padding:12px; border:1px solid #ddd; }
-        th { background:#001f3f; color:#ffeb3b; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #0b1c3d;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #0b1c3d;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        input, button {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        button {
+            background: #0b1c3d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #142f66;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #0b1c3d;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #0b1c3d;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-<h2>Payment Details</h2>
+<header>
+    <h1>ComfyStay Hostel</h1>
+    <p>Payment Management</p>
+</header>
 
-<table>
-    <thead>
-    <tr>
-        <th>Tenant Email</th>
-        <th>Month</th>
-        <th>Amount</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody id="paymentTable"></tbody>
-</table>
+<div class="container">
+    <h2>Add Payment</h2>
 
+    <form id="paymentForm">
+        <input type="text" id="tenantName" placeholder="Tenant Name" required>
+        <input type="number" id="amount" placeholder="Amount" required>
+        <input type="date" id="paymentDate" required>
+        <button type="submit">Add Payment</button>
+    </form>
+
+    <h2>Payment Records</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Tenant Name</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody id="paymentTable"></tbody>
+    </table>
+
+    <a href="/dashboard.html">⬅ Back to Dashboard</a>
+</div>
+
+<!-- ===== INLINE JAVASCRIPT ===== -->
 <script>
+    // Load payments
     fetch("/api/payments")
-    .then(res => res.json())
-    .then(data => {
-        const table = document.getElementById("paymentTable");
-        data.forEach(p => {
-            table.innerHTML += `
-            <tr>
-                <td>${p.tenantEmail}</td>
-                <td>${p.month}</td>
-                <td>${p.amount}</td>
-                <td>${p.status}</td>
-            </tr>`;
-        });
+        .then(response => response.json())
+        .then(data => {
+            const table = document.getElementById("paymentTable");
+            table.innerHTML = "";
+
+            data.forEach(p => {
+                table.innerHTML += `
+                    <tr>
+                        <td>${p.tenantName}</td>
+                        <td>${p.amount}</td>
+                        <td>${p.paymentDate}</td>
+                    </tr>
+                `;
+            });
+        })
+        .catch(err => console.error("Error loading payments", err));
+
+    // Add payment
+    document.getElementById("paymentForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const payment = {
+            tenantName: document.getElementById("tenantName").value,
+            amount: document.getElementById("amount").value,
+            paymentDate: document.getElementById("paymentDate").value
+        };
+
+        fetch("/api/payments", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payment)
+        })
+        .then(() => {
+            alert("Payment added successfully");
+            location.reload();
+        })
+        .catch(err => console.error("Error adding payment", err));
     });
 </script>
 

@@ -3,53 +3,63 @@
 <head>
     <title>Complaints</title>
     <style>
-        body { font-family: Arial; padding: 20px; background: #f4f6f8; }
-        table { width: 100%; border-collapse: collapse; background: white; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        body { font-family: Arial; background: #f4f6f8; padding: 20px; }
+        input, button { padding: 10px; margin: 5px; width: 300px; }
+        table { width: 100%; background: white; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; }
         th { background: navy; color: white; }
     </style>
 </head>
 <body>
 
-<h2>Complaints</h2>
+<h2>Raise Complaint</h2>
+
+<input type="email" id="email" placeholder="Tenant Email">
+<input type="text" id="issue" placeholder="Issue">
+<button onclick="submitComplaint()">Submit</button>
+
+<h2>Complaint List</h2>
 
 <table>
     <thead>
     <tr>
-        <th>Tenant Email</th>
+        <th>Email</th>
         <th>Issue</th>
         <th>Status</th>
     </tr>
     </thead>
-    <tbody id="complaintTable"></tbody>
+    <tbody id="complaints"></tbody>
 </table>
 
 <script>
-    fetch("/api/complaints")
-        .then(response => response.json())
-        .then(data => {
-            const table = document.getElementById("complaintTable");
+    function submitComplaint() {
+        fetch("/api/complaint", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                tenantEmail: document.getElementById("email").value,
+                issue: document.getElementById("issue").value
+            })
+        }).then(() => loadComplaints());
+    }
 
-            if (!Array.isArray(data) || data.length === 0) {
-                table.innerHTML = "<tr><td colspan='3'>No complaints found.</td></tr>";
-                return;
-            }
-
-            data.forEach(c => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${c.tenantEmail}</td>
-                    <td>${c.issue}</td>
-                    <td style="color:${c.status==='OPEN'?'red':'green'}">${c.status}</td>
-                `;
-                table.appendChild(row);
+    function loadComplaints() {
+        fetch("/api/complaints")
+            .then(res => res.json())
+            .then(data => {
+                let rows = "";
+                data.forEach(c => {
+                    rows += `<tr>
+                        <td>${c.tenantEmail}</td>
+                        <td>${c.issue}</td>
+                        <td>${c.status}</td>
+                    </tr>`;
+                });
+                document.getElementById("complaints").innerHTML = rows;
             });
-        })
-        .catch(err => {
-            console.error("Error fetching complaints:", err);
-            const table = document.getElementById("complaintTable");
-            table.innerHTML = "<tr><td colspan='3'>Error fetching complaints.</td></tr>";
-        });
+    }
+
+    loadComplaints();
 </script>
 
 </body>

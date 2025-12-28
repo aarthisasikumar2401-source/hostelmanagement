@@ -1,22 +1,28 @@
 package com.hostel.hostelmanagement.controller;
 
-import com.hostel.hostelmanagement.model.Tenant;
-import com.hostel.hostelmanagement.repository.TenantRepository;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.hostel.hostelmanagement.model.Tenant;
+import com.hostel.hostelmanagement.repository.TenantRepository;
+
 @RestController
-@RequestMapping("/api/tenants")
+@RequestMapping("/tenant")
 public class TenantController {
 
-    private final TenantRepository tenantRepository;
+    @Autowired
+    private TenantRepository tenantRepository;
 
-    public TenantController(TenantRepository tenantRepository) {
-        this.tenantRepository = tenantRepository;
+    // Add tenant
+    @PostMapping("/add")
+    public Tenant addTenant(@RequestBody Tenant tenant) {
+        return tenantRepository.save(tenant);
     }
 
-    @GetMapping
+    // Display all tenants
+    @GetMapping("/all")
     public List<Tenant> getAllTenants() {
         return tenantRepository.findAll();
     }
